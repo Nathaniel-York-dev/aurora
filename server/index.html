@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Discovery</title>
+  </head>
+  <body>
+    <!--<video id="video" controls width="600">
+      <source src="http://localhost:3000/stream/largest_sample.mp4" type="video/mp4">
+    </video>-->
+  </body>
+  <script>
+    const title = document.getElementById("address");
+
+    function renderLinks(names) {
+      const links = names.map(
+        (name) => `<a href="/stream/${name}">${name}</a>`
+      );
+      document.body.innerHTML += links.join("<br>");
+    }
+
+    function renderHeader(address) {
+      const header = `<h1>Address: ${address}</h1>`;
+      document.body.innerHTML += header;
+    }
+
+    function discoverFiles(){
+        fetch("/discover").then((response) => {
+            return response.json();
+        }).then((data) => {
+            renderLinks(data);
+        });
+    }
+
+    function discoverAddress(){
+        fetch("/localAddress").then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);
+            renderHeader(data);
+        });
+    }
+
+    discoverAddress();
+    discoverFiles();
+  </script>
+</html>

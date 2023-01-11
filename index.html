@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AuroraStream</title>
+  </head>
+  <body>
+    <input type="file" id="file" webkitdirectory directory multiple>
+
+    <!--<video id="video" controls width="600">
+      <source src="http://localhost:3000/stream/largest_sample.mp4" type="video/mp4">
+    </video>-->
+    
+  </body>
+
+  <script src="./renderer.js"></script>
+  <script>
+    const input = document.getElementById('file');
+    
+    function renderLinks(names){
+      const links = names.map(name => `<a href="http://localhost:3000/stream/${name}">${name}</a>`);
+      document.body.innerHTML += links.join('<br>');
+    }
+
+    function renderQrCode(code){
+      const img = document.createElement('img');
+      img.src = code;
+      document.body.appendChild(img);
+    }
+
+    input.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      const directory = file.path.replace(file.name, '');
+      const names = await window.utils.associate(directory);
+      renderLinks(names);
+    })
+
+    async function getCode(){
+      const address = await window.utils.address();
+      const code = await window.utils.code(`http://${address}:3000`);
+      renderQrCode(code);
+    };
+
+    getCode();
+  </script>
+</html>

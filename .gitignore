@@ -1,0 +1,12 @@
+#node modules
+/node_modules
+#electron-packager
+/aurora-darwin-x64
+/aurora-darwin-arm64
+/aurora-win32-ia32
+/aurora-win32-x64
+/aurora-linux-ia32
+/aurora-linux-x64
+#System files
+.DS_Store
+Thumbs.db
