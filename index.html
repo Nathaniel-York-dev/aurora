@@ -37,7 +37,7 @@
 
     async function getCode(){
       const address = await window.utils.address();
-      const code = await window.utils.code(`http://${address}:3000`);
+      const code = await window.utils.code(`http://${address}:3000/discoverer`);
       renderQrCode(code);
     };
 

@@ -23,9 +23,26 @@ class AuroraServer {
 
     features() {
 
-        this.app.get('/', (req, res) => {
-            // Serve the index.html file
-            res.sendFile(path.join(__dirname, 'index.html'))
+        this.app.get('/discoverer', (req, res) => {
+            // return index angular project
+            res.sendFile(path.join(__dirname, '/../client/public/index.html'))
+        })
+
+        /*this.app.get('/', (req, res) => {
+            // return index angular project
+            res.sendFile(path.join(__dirname, '/index.html'))
+        })*/
+
+        this.app.get('/discoverer/:file', (req, res) => {
+            const file = req.params.file
+            const mimetype = file.split('.')[1]
+            if (mimetype) {
+                res.sendFile(path.join(__dirname, '/../client/public/', file))
+                return
+            }else {
+                // if file not have a mimetype is a internal angular route
+                res.sendFile(path.join(__dirname, '/../client/public/index.html'))
+            }
         })
 
         this.app.get('/localAddress', (req, res) => {
